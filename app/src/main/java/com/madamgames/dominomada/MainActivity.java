@@ -7,8 +7,8 @@ public class MainActivity extends Activity{
  @Override public void onCreate(Bundle b){super.onCreate(b);prefs=getSharedPreferences("domino",0);build();if(!restore())newGame();}
  private TextView label(String text,int size){TextView v=new TextView(this);v.setText(text);v.setTextSize(size);v.setGravity(Gravity.CENTER);v.setPadding(0,10,0,10);return v;}
  private void build(){
-  LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER_HORIZONTAL);root.setPadding(24,28,24,18);
-  TextView title=label("DominoMada · 4 joueurs",26);title.setTextColor(Color.DKGRAY);status=label("",16);
+  LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER_HORIZONTAL);root.setPadding(20,22,20,16);
+  TextView title=label("DominoMada · 4 joueurs",26);title.setTextColor(Color.rgb(35,45,55));status=label("",16);
   Button play=new Button(this);play.setText("Jouer un coup automatique");Button reset=new Button(this);reset.setText("Nouvelle partie");
   root.addView(title);root.addView(status);root.addView(play);root.addView(reset);setContentView(root);
   play.setOnClickListener(v->autoPlay());reset.setOnClickListener(v->{newGame();persist();});
