@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-  <application android:icon="@drawable/ic_launcher_domino" android:roundIcon="@drawable/ic_launcher_domino" android:usesCleartextTraffic="true" android:label="DominoMada" android:theme="@style/AppTheme">
+  <application android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:usesCleartextTraffic="true" android:label="DominoMada" android:theme="@style/AppTheme">
     <activity android:name=".MainActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
