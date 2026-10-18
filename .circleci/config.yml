@@ -1,0 +1,40 @@
+version: 2.1
+
+jobs:
+  android-build-test:
+    docker:
+      - image: cimg/android:2026.08
+    resource_class: medium
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - domino-gradle-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+            - domino-gradle-v1-
+      - run:
+          name: Verify Java and Android SDK
+          command: |
+            java -version
+            test -n "${ANDROID_HOME:-}"
+      - run:
+          name: Run Gradle tests and assemble debug APK
+          command: |
+            set -euo pipefail
+            chmod +x gradlew
+            ./gradlew --no-daemon --stacktrace test assembleDebug
+            test -s app/build/outputs/apk/debug/app-debug.apk
+      - save_cache:
+          key: domino-gradle-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+      - store_test_results:
+          path: app/build/test-results
+      - store_artifacts:
+          path: app/build/outputs/apk
+          destination: android-apks
+
+workflows:
+  ci-fallback:
+    jobs:
+      - android-build-test
