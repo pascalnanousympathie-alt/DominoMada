@@ -41,10 +41,20 @@ jobs:
       - name: Assemble Android debug APK
         run: ./gradlew --no-daemon assembleDebug
 
-      - name: Upload debug APK artifact
+      - name: Assemble unsigned Android release AAB for QA
+        env:
+          LUDOMADA_SIGNING_STORE_FILE: ""
+          LUDOMADA_SIGNING_STORE_PASSWORD: ""
+          LUDOMADA_SIGNING_KEY_ALIAS: ""
+          LUDOMADA_SIGNING_KEY_PASSWORD: ""
+        run: ./gradlew --no-daemon bundleRelease
+
+      - name: Upload unsigned QA APK and AAB artifacts
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: dominomada-debug-apk-${{ github.sha }}
-          path: app/build/outputs/apk/debug/*.apk
+          name: dominomada-android-qa-artifacts-${{ github.sha }}
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/bundle/release/*.aab
           if-no-files-found: error
           retention-days: 7
